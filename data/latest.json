@@ -1,0 +1,192 @@
+{
+ "date": "2026-10-09",
+ "items": [
+  {
+   "slug": "pp",
+   "name": "PP拉丝",
+   "price": 10370.0,
+   "chg": "1.77%",
+   "updated": "10-09 15:00",
+   "avg3m": 9444.43,
+   "hi3m": 10370.0,
+   "lo3m": 8633.33,
+   "pos1y": "高位",
+   "pos2y": "高位",
+   "spot": [
+    {
+     "grade": "T30S",
+     "maker": "镇海炼化",
+     "region": "浙江省",
+     "price": 11450.0,
+     "time": "2026-10-09 15:00"
+    },
+    {
+     "grade": "L5E89",
+     "maker": "抚顺石化",
+     "region": "山东省",
+     "price": 10370.0,
+     "time": "2026-10-09 15:00"
+    },
+    {
+     "grade": "L5E89",
+     "maker": "中煤",
+     "region": "浙江省",
+     "price": 10666.67,
+     "time": "2026-10-09 15:00"
+    }
+   ],
+   "source": "https://www.100ppi.com/rawmex/detail-718.html"
+  },
+  {
+   "slug": "lldpe",
+   "name": "LLDPE",
+   "price": 9680.0,
+   "chg": "2.09%",
+   "updated": "10-09 15:00",
+   "avg3m": 8749.07,
+   "hi3m": 9680.0,
+   "lo3m": 7565.0,
+   "pos1y": "高位",
+   "pos2y": "高位",
+   "spot": [
+    {
+     "grade": "7042",
+     "maker": "吉化",
+     "region": "华东",
+     "price": 9866.67,
+     "time": "2026-10-09 15:00"
+    },
+    {
+     "grade": "7042",
+     "maker": "大庆",
+     "region": "山东省",
+     "price": 9493.33,
+     "time": "2026-10-09 15:00"
+    }
+   ],
+   "source": "https://www.100ppi.com/rawmex/detail-435.html"
+  },
+  {
+   "slug": "hdpe",
+   "name": "HDPE",
+   "price": 10662.5,
+   "chg": "1.67%",
+   "updated": "10-09 14:15",
+   "avg3m": 10644.81,
+   "hi3m": 11100.0,
+   "lo3m": 10375.0,
+   "pos1y": "高位",
+   "pos2y": "高位",
+   "spot": [],
+   "source": "https://www.100ppi.com/rawmex/detail-295.html"
+  },
+  {
+   "slug": "ldpe",
+   "name": "LDPE",
+   "price": 12466.67,
+   "chg": "2.47%",
+   "updated": "10-09 14:15",
+   "avg3m": 11152.93,
+   "hi3m": 12466.67,
+   "lo3m": 10000.0,
+   "pos1y": "高位",
+   "pos2y": "高位",
+   "spot": [],
+   "source": "https://www.100ppi.com/rawmex/detail-334.html"
+  },
+  {
+   "slug": "pvc",
+   "name": "PVC SG-5",
+   "price": 4880.0,
+   "chg": "1.67%",
+   "updated": "10-09 15:00",
+   "avg3m": 4590.52,
+   "hi3m": 4965.0,
+   "lo3m": 4375.0,
+   "pos1y": "中低位",
+   "pos2y": "中低位",
+   "spot": [
+    {
+     "grade": "SG-5 优等品",
+     "maker": "信发",
+     "region": "华东",
+     "price": 4870.0,
+     "time": "2026-10-09 15:00"
+    },
+    {
+     "grade": "SG-5 优等品",
+     "maker": "鲁泰",
+     "region": "华东",
+     "price": 4890.0,
+     "time": "2026-10-09 15:00"
+    }
+   ],
+   "source": "https://www.100ppi.com/rawmex/detail-107.html"
+  },
+  {
+   "slug": "abs",
+   "name": "ABS",
+   "price": 11733.33,
+   "chg": "1.88%",
+   "updated": "10-09 15:00",
+   "avg3m": 10441.1,
+   "hi3m": 11733.33,
+   "lo3m": 9416.67,
+   "pos1y": "中位",
+   "pos2y": "中位",
+   "spot": [
+    {
+     "grade": "0215A",
+     "maker": "吉林石化",
+     "region": "广东省",
+     "price": 11733.33,
+     "time": "2026-10-09 15:00"
+    }
+   ],
+   "source": "https://www.100ppi.com/rawmex/detail-713.html"
+  },
+  {
+   "slug": "ps",
+   "name": "PS",
+   "price": 11300.0,
+   "chg": "0.00%",
+   "updated": "10-09 14:15",
+   "avg3m": 10274.54,
+   "hi3m": 11300.0,
+   "lo3m": 8950.0,
+   "pos1y": "高位",
+   "pos2y": "高位",
+   "spot": [],
+   "source": "https://www.100ppi.com/rawmex/detail-465.html"
+  },
+  {
+   "slug": "pet",
+   "name": "PET",
+   "price": 9021.25,
+   "chg": "0.89%",
+   "updated": "10-09 15:00",
+   "avg3m": 8009.65,
+   "hi3m": 9030.42,
+   "lo3m": 7225.0,
+   "pos1y": "高位",
+   "pos2y": "高位",
+   "spot": [
+    {
+     "grade": "水瓶级",
+     "maker": "浙江万凯",
+     "region": "华东",
+     "price": 9080.0,
+     "time": "2026-10-09 15:00"
+    },
+    {
+     "grade": "水瓶级",
+     "maker": "三房巷",
+     "region": "华东",
+     "price": 8962.5,
+     "time": "2026-10-09 15:00"
+    }
+   ],
+   "source": "https://www.100ppi.com/rawmex/detail-173.html"
+  }
+ ]
+}
