@@ -1,0 +1,774 @@
+{
+"/404.html": [
+"text/html; charset=utf-8",
+false
+],
+"/99b9f6e18c15ad831c69d1a8f837fdef.txt": [
+"text/plain; charset=utf-8",
+false
+],
+"/alerts.xml": [
+"application/xml; charset=utf-8",
+false
+],
+"/apple-touch-icon.png": [
+"image/png",
+true
+],
+"/favicon-96.png": [
+"image/png",
+true
+],
+"/favicon.ico": [
+"image/vnd.microsoft.icon",
+true
+],
+"/icon-192.png": [
+"image/png",
+true
+],
+"/icon-512-transparent.png": [
+"image/png",
+true
+],
+"/icon-512.png": [
+"image/png",
+true
+],
+"/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/llms.txt": [
+"text/plain; charset=utf-8",
+false
+],
+"/mark-64.png": [
+"image/png",
+true
+],
+"/robots.txt": [
+"text/plain; charset=utf-8",
+false
+],
+"/site.webmanifest": [
+"application/manifest+json",
+true
+],
+"/sitemap.xml": [
+"application/xml; charset=utf-8",
+false
+],
+"/sw.js": [
+"text/javascript; charset=utf-8",
+false
+],
+"/widget.js": [
+"text/javascript; charset=utf-8",
+false
+],
+"/about/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/abs/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/alerts/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/articles/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/articles/2026-10-cost-after-holiday/chart.png": [
+"image/png",
+true
+],
+"/articles/2026-10-cost-after-holiday/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/articles/2026-10-global-outlook/chart.png": [
+"image/png",
+true
+],
+"/articles/2026-10-global-outlook/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/articles/2026-10-ldpe-spread/chart.png": [
+"image/png",
+true
+],
+"/articles/2026-10-ldpe-spread/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/articles/2026-10-overseas-lldpe/chart.png": [
+"image/png",
+true
+],
+"/articles/2026-10-overseas-lldpe/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/articles/2026-10-pe-new-capacity/chart.png": [
+"image/png",
+true
+],
+"/articles/2026-10-pe-new-capacity/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/articles/2026-10-pp-basis-weekly/chart.png": [
+"image/png",
+true
+],
+"/articles/2026-10-pp-basis-weekly/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/articles/2026-10-pp-hormuz-soften/chart.png": [
+"image/png",
+true
+],
+"/articles/2026-10-pp-hormuz-soften/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/articles/2026-10-pp-import-vs-domestic/chart.png": [
+"image/png",
+true
+],
+"/articles/2026-10-pp-import-vs-domestic/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/articles/2026-10-pp-t30s-lock/chart.png": [
+"image/png",
+true
+],
+"/articles/2026-10-pp-t30s-lock/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/articles/2026-10-pp-why-up/chart.png": [
+"image/png",
+true
+],
+"/articles/2026-10-pp-why-up/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/articles/2026-10-pvc-export-policy/chart.png": [
+"image/png",
+true
+],
+"/articles/2026-10-pvc-export-policy/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/articles/2026-10-raise-price/chart.png": [
+"image/png",
+true
+],
+"/articles/2026-10-raise-price/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/articles/2026-10-weekly-1/chart.png": [
+"image/png",
+true
+],
+"/articles/2026-10-weekly-1/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/articles/guide-injection-part-cost/chart.png": [
+"image/png",
+true
+],
+"/articles/guide-injection-part-cost/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/articles/guide-price-clause/chart.png": [
+"image/png",
+true
+],
+"/articles/guide-price-clause/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/articles/guide-tax-price/chart.png": [
+"image/png",
+true
+],
+"/articles/guide-tax-price/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/assets/lwc.bb318371.js": [
+"text/javascript; charset=utf-8",
+false
+],
+"/basis/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/cost/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/cost/abs-shell/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/cost/hdpe-drum/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/cost/hdpe-tshirt-bag/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/cost/pe-garbage-bag/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/cost/pet-bottle/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/cost/pp-crate/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/cost/pp-food-box/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/cost/pp-woven-bag/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/cost/ps-cup/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/cost/pvc-pipe/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/data/history.csv": [
+"text/csv; charset=utf-8",
+false
+],
+"/data/latest.csv": [
+"text/csv; charset=utf-8",
+false
+],
+"/data/latest.json": [
+"application/json; charset=utf-8",
+false
+],
+"/data/sf_basis.csv": [
+"text/csv; charset=utf-8",
+false
+],
+"/download/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/download/plastic-cost-template.xlsx": [
+"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+true
+],
+"/eps/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/eva/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/fupan/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/0215a/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/121h/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/18d/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/2102tn26/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/218w/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/2420h/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/2426h/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/2426k/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/2911/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/4220/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/466f/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/5000s/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/525/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/5502/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/6098/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/7000f/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/7042/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/7047/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/7050/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/747/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/750a/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/757/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/8008/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/8391/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/9455f/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/b8101/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/cr-8816/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/ep548r/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/eps30r/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/f401/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/hips/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/hp500n/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/k1008/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/k7726/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/k8003/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/k8303/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/l5e89/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/m30rh/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/m800e/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/pet-bottle/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/pet-fiber/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/pg-33/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/ph-88/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/s1003/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/sg-3/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/sg-5/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/sg-7/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/sg-8/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/t30s/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/v30g/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/wk-801/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/y1600/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/grade/z30s/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/hdpe/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2025-10/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2025-11/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2025-12/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-01/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-02/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-03/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-04/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-05/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-06/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-07/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-08/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-09/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-10/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-10-09/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-10-10/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-10-11/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-10-12/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-10-13/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-10-14/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-10-15/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-10-16/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-10-17/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-10-18/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-10-19/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-10-20/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-10-21/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-10-22/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-11/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-11-01/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-11-08/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/history/2026-11-10/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/img/wx-qr.webp": [
+"image/webp",
+true
+],
+"/ldpe/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/lldpe/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/pa6/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/pa66/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/pc/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/pet/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/pinzhong/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/pmma/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/pp/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/pp-fiber/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/ps/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/pvc/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/rank/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/spread/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/spread/abs-ps/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/spread/hdpe-lldpe/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/spread/ldpe-lldpe/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/spread/pp-lldpe/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/today/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/today/today.jpg": [
+"image/jpeg",
+true
+],
+"/tools/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/tools/cost/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/tools/import/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/tools/letter/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/tools/pass-through/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/tools/proof/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/tools/tax/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/tools/widget/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/wenda/index.html": [
+"text/html; charset=utf-8",
+false
+],
+"/wendu/index.html": [
+"text/html; charset=utf-8",
+false
+]
+}

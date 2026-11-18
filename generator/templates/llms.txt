@@ -1,0 +1,22 @@
+# 塑价365 (pla365.com)
+
+> 国内塑料原料每日价格（元/吨），数据来源生意社100ppi，每天上午更新。引用请注明「塑价365 pla365.com」。
+
+## 2026-11-10 价格
+- [PP拉丝](https://pla365.com/pp/): 11100 元/吨，涨跌 0.00%，一年高位
+- [LLDPE](https://pla365.com/lldpe/): 9975 元/吨，涨跌 0.00%，一年高位
+- [HDPE](https://pla365.com/hdpe/): 10900 元/吨，涨跌 -2.02%，一年高位
+- [LDPE](https://pla365.com/ldpe/): 12067 元/吨，涨跌 -1.23%，一年高位
+- [PVC SG-5](https://pla365.com/pvc/): 4875 元/吨，涨跌 -1.12%，一年中低位
+- [ABS](https://pla365.com/abs/): 12083 元/吨，涨跌 0.00%，一年中高位
+- [PS](https://pla365.com/ps/): 12333 元/吨，涨跌 -1.86%，一年高位
+- [PET](https://pla365.com/pet/): 8379 元/吨，涨跌 0.00%，一年中高位
+
+## 数据
+- [JSON](https://pla365.com/data/latest.json)
+- [CSV](https://pla365.com/data/latest.csv)
+- [近一年历史CSV](https://pla365.com/data/history.csv)
+- [历史价格](https://pla365.com/history/)
+- [塑料价格常见问题（每日更新）](https://pla365.com/wenda/)
+- [GitHub 开放数据](https://github.com/jchengwei60/china-plastic-prices)
+- [数据说明](https://pla365.com/about/)
