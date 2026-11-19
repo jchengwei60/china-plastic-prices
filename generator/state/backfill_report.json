@@ -1,0 +1,72 @@
+{
+ "range": [
+  "2025-10-09",
+  "2026-11-18"
+ ],
+ "boards_parsed": 233,
+ "slugs": {
+  "eps": {
+   "before": 46,
+   "added": 8,
+   "after": 54,
+   "first": "2026-09-01",
+   "last": "2026-11-18",
+   "conflicts": [],
+   "conflict_count": 0
+  },
+  "pc": {
+   "before": 71,
+   "added": 174,
+   "after": 245,
+   "first": "2025-10-09",
+   "last": "2026-11-18",
+   "conflicts": [],
+   "conflict_count": 0
+  },
+  "pa6": {
+   "before": 71,
+   "added": 174,
+   "after": 245,
+   "first": "2025-10-09",
+   "last": "2026-11-18",
+   "conflicts": [],
+   "conflict_count": 0
+  },
+  "pa66": {
+   "before": 71,
+   "added": 174,
+   "after": 245,
+   "first": "2025-10-09",
+   "last": "2026-11-18",
+   "conflicts": [],
+   "conflict_count": 0
+  },
+  "eva": {
+   "before": 71,
+   "added": 174,
+   "after": 245,
+   "first": "2025-10-09",
+   "last": "2026-11-18",
+   "conflicts": [],
+   "conflict_count": 0
+  },
+  "pmma": {
+   "before": 71,
+   "added": 174,
+   "after": 245,
+   "first": "2025-10-09",
+   "last": "2026-11-18",
+   "conflicts": [],
+   "conflict_count": 0
+  },
+  "pp-fiber": {
+   "before": 71,
+   "added": 174,
+   "after": 245,
+   "first": "2025-10-09",
+   "last": "2026-11-18",
+   "conflicts": [],
+   "conflict_count": 0
+  }
+ }
+}
