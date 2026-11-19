@@ -48,6 +48,7 @@ import datetime as dt
 import json
 import re
 
+from .article_links import inject, variety_section
 from .compute import chg_pct, percentile, pos_label, stats_3m, temperature_label
 from .dataio import SLUGS
 
@@ -444,4 +445,6 @@ def render_variety(ctx, sample, slug, series, fut_series=None, settle=None,
                fix_ld, h, count=1)
     # --- footer date ---
     h = re.sub(r"整理于 \d{4}-\d{2}-\d{2}", f"整理于 {today}", h)
+    # article entry point (approved 2026-11-19)
+    h = inject(h, variety_section(slug))
     return h

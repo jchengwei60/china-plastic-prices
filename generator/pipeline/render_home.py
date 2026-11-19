@@ -16,6 +16,8 @@ from __future__ import annotations
 import json
 import re
 
+from .article_links import home_section, inject
+
 ADVICE = {
     "偏贵": "按需采购、不建议囤货",
     "偏便宜": "可以考虑分批补货",
@@ -213,4 +215,6 @@ def render_home(ctx, sample):
                fix_ld, h, count=1)
     # footer date
     h = re.sub(r"整理于 \d{4}-\d{2}-\d{2}", f"整理于 {today}", h)
+    # article entry point (approved 2026-11-19)
+    h = inject(h, home_section())
     return h
