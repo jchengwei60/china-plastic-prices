@@ -1,0 +1,30 @@
+name: pla365-weekly-draft
+
+on:
+  schedule:
+    - cron: "0 1 * * 1"   # Monday 09:00 Asia/Shanghai
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate weekly report draft
+        env:
+          TZ: Asia/Shanghai
+        run: python generator/make_weekly_draft.py
+      - name: Commit draft
+        run: |
+          git config user.name "pla365-bot"
+          git config user.email "actions@github.com"
+          git add drafts
+          git diff --cached --quiet || git commit -m "draft: weekly report $(TZ=Asia/Shanghai date +%F)"
+          git push
