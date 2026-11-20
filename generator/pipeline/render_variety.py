@@ -59,6 +59,23 @@ FUTURES = {
     "pet": ("郑商所", "瓶片PR"),
 }
 
+# Title templates for the 8 mains (keyword alignment, approved
+# 2026-11-20 after the Baidu keyword research): every main carries
+# 最新行情走势; PS is disambiguated as PS塑料 (bare "PS" collides with
+# game consoles); PET carries 瓶片, the name buyers actually search.
+# PP and HDPE match their long-standing titles. Extras keep their
+# existing 最新行情多少钱一吨 pattern.
+TITLES = {
+    "pp": "PP拉丝价格今日{d}_PP拉丝最新行情走势_塑价365",
+    "lldpe": "LLDPE价格今日{d}_LLDPE最新行情走势_塑价365",
+    "hdpe": "HDPE价格今日{d}_HDPE最新行情走势_塑价365",
+    "ldpe": "LDPE价格今日{d}_LDPE最新行情走势_塑价365",
+    "pvc": "PVC SG-5价格今日{d}_PVC最新行情走势_塑价365",
+    "abs": "ABS价格今日{d}_ABS最新行情走势_塑价365",
+    "ps": "PS塑料价格今日{d}_PS塑料最新行情走势_塑价365",
+    "pet": "PET瓶片价格今日{d}_PET最新行情走势_塑价365",
+}
+
 EXTRAS = ["eps", "pc", "pa6", "pa66", "eva", "pmma", "pp-fiber"]
 
 
@@ -380,13 +397,24 @@ def render_variety(ctx, sample, slug, series, fut_series=None, settle=None,
     h = sample
     # --- head: title, meta, og, modified time, Dataset LD ---
     h = re.sub(r"今日\d+月\d+日", f"今日{date_s}", h)
+    if is_main and slug in TITLES:
+        title = TITLES[slug].format(d=date_s)
+        h = re.sub(r"<title>[^<]*</title>", f"<title>{title}</title>",
+                   h, count=1)
+        h = re.sub(r'(<meta property="og:title" content=")[^"]*(")',
+                   rf"\g<1>{title}\g<2>", h, count=1)
     if is_main:
         st = stats_3m(series)
-        meta = (f"{date_s}{name}价格{view['price']:.0f}元/吨，"
+        # Meta leads with 生意社基准价: that is what the price is, and
+        # it is the wording buyers search with (keyword research
+        # 2026-11-20).
+        meta = (f"{date_s}{name}生意社基准价{view['price']:.0f}元/吨，"
                 f"涨跌{view['chg']:.2f}%，三个月均价{st['avg']:.0f}。{sub[:30]}")
+        if slug == "pvc":
+            meta = meta.replace("主流SG-5型", "主流电石法SG-5型")
     else:
         data_date = series[-1][0]
-        meta = (f"{data_date}{name}价格{view['price']:.0f}元/吨，"
+        meta = (f"{data_date}生意社大宗榜{name}价格{view['price']:.0f}元/吨，"
                 f"日涨跌{view['chg']:.2f}%，同比{yoy:+.2f}%。{sub[:30]}")
     h = re.sub(r'(<meta name="description" content=")[^"]*(")',
                rf"\g<1>{meta}\g<2>", h, count=1)

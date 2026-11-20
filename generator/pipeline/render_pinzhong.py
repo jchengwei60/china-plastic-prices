@@ -29,8 +29,16 @@ def render_pinzhong(ctx, sample):
     h = sample
     today = ctx["today"]
     date_s = _m_d(today)
-    meta = (f"{date_s}国内15个塑料品种今日价格、涨跌和近一年区间，"
-            f"以及各品种常用牌号价格页。")
+    # Title targets 今日报价表, the highest-frequency modifier in the
+    # Baidu dropdown research (2026-11-20); this page is the site's
+    # quote table, no other page carried the term.
+    title = f"塑料价格今日报价表{date_s}_15个品种价格大全_塑价365"
+    h = re.sub(r"<title>[^<]*</title>", f"<title>{title}</title>",
+               h, count=1)
+    h = re.sub(r'(<meta property="og:title" content=")[^"]*(")',
+               rf"\g<1>{title}\g<2>", h, count=1)
+    meta = (f"{date_s}塑料价格今日报价表：国内15个塑料品种今日价格、"
+            f"涨跌和近一年区间，以及各品种常用牌号价格页。")
     # meta description + og:description (same text in both)
     h = re.sub(r'(<meta name="description" content=")[^"]*(")',
                rf"\g<1>{meta}\g<2>", h, count=1)

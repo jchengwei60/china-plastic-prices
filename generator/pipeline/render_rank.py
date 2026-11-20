@@ -101,7 +101,7 @@ def render_rank(ctx, sample, series):
     day_max = _leader(day, "max")
 
     # title / meta / og
-    title = f"塑料价格涨跌榜{date_s}_塑价365"
+    title = f"塑料价格涨跌榜{date_s}_近7日涨跌幅_塑价365"
     h = re.sub(r"<title>[^<]*</title>", f"<title>{title}</title>", h, count=1)
     meta = (f"{date_s}国内8大塑料品种涨跌幅排行：日涨跌、近一周、近一月、近一年。"
             f"近一周涨得最多：{week_max}；跌得最多：{week_min}。")
