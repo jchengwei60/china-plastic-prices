@@ -1,0 +1,34 @@
+name: pla365-alert-pack
+
+on:
+  workflow_run:
+    workflows: ["pla365-daily"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Generate alert pack
+        env:
+          TZ: Asia/Shanghai
+        run: python generator/make_alert_pack.py
+      - name: Commit pack
+        run: |
+          git config user.name "pla365-bot"
+          git config user.email "actions@github.com"
+          git add drafts
+          git diff --cached --quiet || git commit -m "draft: alert pack $(TZ=Asia/Shanghai date +%F)"
+          git push
