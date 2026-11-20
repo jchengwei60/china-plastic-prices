@@ -1,0 +1,34 @@
+name: pla365-news-fetch
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          pip install playwright
+          playwright install --with-deps chromium
+      - name: Fetch news
+        env:
+          TZ: Asia/Shanghai
+        run: python generator/fetch_news.py
+      - name: Commit news state
+        run: |
+          git config user.name "pla365-bot"
+          git config user.email "actions@github.com"
+          git add generator/state drafts
+          git diff --cached --quiet || git commit -m "news: fetch $(TZ=Asia/Shanghai date +%F)"
+          git push
