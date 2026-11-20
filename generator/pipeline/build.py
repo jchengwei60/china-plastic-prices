@@ -188,6 +188,23 @@ def build_all(templates, manifest, series, extras_state, basis_text,
         if ctype.startswith("text/html"):
             content = _stamps(content, today)
         out[path] = (content, ctype, binary)
+
+    # The 解读 section's pill nav gains an 行业动态 entry (the /news/
+    # page), on every page that carries that nav.
+    for path in list(out):
+        content, ctype, binary = out[path]
+        if binary or "text/html" not in ctype:
+            continue
+        new = content.replace(
+            '<a href="/history/">历史价格</a></nav>',
+            '<a href="/history/">历史价格</a>'
+            '<a href="/news/">行业动态</a></nav>')
+        new = new.replace(
+            '<a href="/history/" class="on">历史价格</a></nav>',
+            '<a href="/history/" class="on">历史价格</a>'
+            '<a href="/news/">行业动态</a></nav>')
+        if new != content:
+            out[path] = (new, ctype, binary)
     return out
 
 
