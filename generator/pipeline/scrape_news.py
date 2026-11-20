@@ -92,7 +92,8 @@ async def fetch_detail(page, url):
             "return {desc: m ? m.content : '', "
             "title: h ? h.innerText : '', doc: document.title || ''}; }")
         doc = (data.get("doc") or "").strip()
-        for sep in (" - 生意社", "_生意社", "-生意社", " | 生意社"):
+        for sep in (" - 生意社", "_生意社", "-生意社", " | 生意社",
+                    " - 商品动态", " - 大宗商品动态"):
             if sep in doc:
                 doc = doc.split(sep)[0].strip()
                 break
