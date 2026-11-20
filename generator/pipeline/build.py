@@ -33,6 +33,7 @@ from .render_history import _stamps, render_day, render_index, render_month
 from .render_home import render_home
 from .render_misc import (make_xlsx, render_download, render_fupan,
                           render_llms, render_today_page)
+from .render_news import render_news
 from .render_pinzhong import render_pinzhong
 from .render_rank import render_rank
 from .render_sitemap import render_sitemap
@@ -59,7 +60,8 @@ def load_templates(templates_dir, manifest_path):
 
 
 def build_all(templates, manifest, series, extras_state, basis_text,
-              latest_csv_text, futures, updated, today, assets_dir):
+              latest_csv_text, futures, updated, today, assets_dir,
+              news_items=None):
     """futures: {slug: {close, chg, date, settle, fut_series}} for the
     four futures varieties. extras_state: {slug: {name, bulk, yoy,
     series}}. Returns the F map."""
@@ -90,6 +92,8 @@ def build_all(templates, manifest, series, extras_state, basis_text,
     put("/alerts/index.html",
         render_alerts({"today": today}, tpl("/alerts/index.html"), series))
     put("/alerts.xml", render_alerts_xml(series))
+    put("/news/index.html",
+        render_news(tpl("/alerts/index.html"), news_items or [], today))
 
     for slug in MAINS:
         kw = {}

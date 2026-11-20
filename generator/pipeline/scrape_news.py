@@ -126,7 +126,9 @@ async def update_news(page, state, today, summary_cap=12):
         title, desc = await fetch_detail(page, it["url"])
         if desc:
             it["summary"] = desc
+        core_new = title.lstrip("生意社：") if title else ""
+        core_old = it["title"].lstrip("生意社：")
         if title and len(title) > len(it["title"]) and \
-                title[:8] == it["title"][:8]:
+                core_new[:6] and core_new[:6] == core_old[:6]:
             it["title"] = title
     return state, added

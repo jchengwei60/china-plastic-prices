@@ -42,6 +42,14 @@ def render_sitemap(ctx, sample, series=None):
     today = ctx["today"]
     out = re.sub(r"<lastmod>[^<]*</lastmod>",
                  f"<lastmod>{today}</lastmod>", sample)
+    if "https://pla365.com/news/" not in out:
+        entry = ("<url><loc>https://pla365.com/news/</loc>"
+                 f"<lastmod>{today}</lastmod>"
+                 "<changefreq>daily</changefreq></url>")
+        anchor = "<url><loc>https://pla365.com/alerts/</loc>"
+        idx = out.find(anchor)
+        if idx != -1:
+            out = out[:idx] + entry + out[idx:]
     if series:
         dates = [d for d, _ in next(iter(series.values()))] if series else []
         months = sorted({d[:7] for d in dates}, reverse=True)

@@ -36,6 +36,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pipeline.basis_data import load_sf_basis  # noqa: E402
 from pipeline.compute import percentile, temperature_label  # noqa: E402
 from pipeline.dataio import NAMES, SLUGS, load_history  # noqa: E402
+from pipeline.news import format_lines  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 FUT_NAMES = {"pp": "聚丙烯PP", "lldpe": "塑料LLDPE", "pvc": "PVC", "pet": "瓶片PR"}
@@ -195,6 +196,27 @@ def main():
                    f"| {r['close']:.0f} | {r['basis']:+.0f} | {bchg} |")
     out.append("")
     out.append("（基差 = 生意社品种基准价 − 期货主力收盘；期货为最近一个交易日。）")
+    out.append("")
+
+    # --- today's industry news (alerted varieties first) ---
+    news_file = ROOT / "generator" / "state" / "news.json"
+    news_items = (json.loads(news_file.read_text(encoding="utf-8"))
+                  .get("items", []) if news_file.exists() else [])
+    day_news = [it for it in news_items if it["date"] == target]
+    news_note = ""
+    if not day_news and news_items:
+        latest_d = news_items[0]["date"]
+        day_news = [it for it in news_items if it["date"] == latest_d]
+        news_note = f"（当日动态未抓到，以下为最近一日 {latest_d} 的动态）"
+    day_news.sort(key=lambda it: (
+        0 if set(it.get("varieties", [])) & set(alerts) else 1,
+        it.get("time", "")), reverse=False)
+    out.append(f"## 今日行业动态{news_note}")
+    out.append("")
+    if day_news:
+        out += format_lines(day_news[:10])
+    else:
+        out.append("- 暂无抓取到的行业动态。")
     out.append("")
 
     # --- WeChat article framework ---

@@ -32,9 +32,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from pipeline.articles_meta import ARTICLES  # noqa: E402
 from pipeline.basis_data import load_sf_basis  # noqa: E402
 from pipeline.compute import percentile, temperature_label  # noqa: E402
 from pipeline.dataio import NAMES, load_history  # noqa: E402
+from pipeline.news import format_lines, items_between  # noqa: E402
 from pipeline.render_misc import JUDGMENTS  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -78,6 +80,10 @@ def main():
     prev_sunday = sunday - timedelta(days=7)
     sun_s, prev_s = sunday.isoformat(), prev_sunday.isoformat()
     week_start = (sunday - timedelta(days=6)).isoformat()
+
+    news_file = ROOT / "generator" / "state" / "news.json"
+    news_items = (json.loads(news_file.read_text(encoding="utf-8"))
+                  .get("items", []) if news_file.exists() else [])
 
     series = load_history((ROOT / "data" / "history.csv").read_text(encoding="utf-8"))
     extras = json.loads((ROOT / "generator" / "state" / "extras.json").read_text(encoding="utf-8"))
@@ -177,6 +183,52 @@ def main():
             L.append(f"- {names[slug]}：{a} → {b}")
     else:
         L.append("- 本周无品种温度档位变化。")
+    L.append("")
+    week_news = items_between(news_items, week_start, sun_s)
+    L.append("## 行业动态（本周，生意社资讯）")
+    L.append("")
+    if week_news:
+        L += format_lines(week_news[:15])
+    else:
+        L.append("- 本周暂无抓取到的行业动态（新闻状态为空或本周无匹配条目）。")
+    L.append("")
+    L.append("## 本周可写选题（按站内文章空白优先）")
+    L.append("")
+    cov = {}
+    for a in ARTICLES:
+        for s in a[4]:
+            cov[s] = cov.get(s, 0) + 1
+    wchg_by_slug = {r[0]: r[3] for r in rows}
+    angles = {"检修": "供应收缩能持续多久、复产时间表、对价格的支撑",
+              "涨价": "涨价函的落地力度、下游接单情况、与现货价差",
+              "政策": "政策影响的品种与执行时间、进出口量变化",
+              "产能": "新产能投放节奏与价格中枢、老装置出清"}
+    cands = []
+    for it in week_news:
+        hot = [c for c in it.get("cats", []) if c in angles]
+        if not hot:
+            continue
+        for s in it.get("varieties", []) or ["macro"]:
+            cands.append((cov.get(s, 0) if s != "macro" else 2,
+                          it, s, hot[0]))
+    cands.sort(key=lambda x: x[0])
+    picked, seen_slugs = [], set()
+    for _, it, s, cat in cands:
+        if s in seen_slugs or len(picked) >= 4:
+            continue
+        seen_slugs.add(s)
+        picked.append((it, s, cat))
+    if picked:
+        for it, s, cat in picked:
+            vname = names.get(s, "通用")
+            move = (f"，本周{vname}{'涨' if wchg_by_slug[s] >= 0 else '跌'}"
+                    f"{abs(wchg_by_slug[s]):.2f}%"
+                    if s in wchg_by_slug else "")
+            L.append(f"- 【{vname}·{cat}】{it['title']}（{it['date'][5:]}）{move}")
+            L.append(f"  可写角度：{angles[cat]}")
+            L.append(f"  素材：{it['url']}")
+    else:
+        L.append("- 本周无突出的检修/涨价/政策/产能类选题。")
     L.append("")
     L.append("## 判断跟踪（复盘页现有记录）")
     L.append("")

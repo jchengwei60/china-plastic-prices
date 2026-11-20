@@ -113,8 +113,16 @@ def render_llms(sample, series, today):
         lines.append(f"- [{NAMES[s]}](https://pla365.com/{s}/): {price:.0f} 元/吨，"
                      f"涨跌 {chg:.2f}%，一年{pos_label(price, min(win), max(win))}")
     body = "\n".join(lines)
-    return re.sub(r'## \d{4}-\d{2}-\d{2} 价格\n(- .*\n)+',
-                  f"## {today} 价格\n{body}\n", sample, count=1)
+    out = re.sub(r'## \d{4}-\d{2}-\d{2} 价格\n(- .*\n)+',
+                 f"## {today} 价格\n{body}\n", sample, count=1)
+    if "https://pla365.com/news/" not in out:
+        anchor = "- [历史价格](https://pla365.com/history/)\n"
+        if anchor in out:
+            out = out.replace(
+                anchor,
+                anchor + "- [塑料行业动态（生意社资讯聚合）]"
+                         "(https://pla365.com/news/)\n", 1)
+    return out
 
 
 def render_download(sample, today):

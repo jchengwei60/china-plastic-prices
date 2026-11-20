@@ -73,6 +73,11 @@ def main():
     basis_rows = load_sf_basis(basis_text)
     latest_csv_text = open(f"{ROOT}/data/latest.csv", encoding="utf-8").read()
     extras_state = json.load(open(f"{GEN}/state/extras.json", encoding="utf-8"))
+    news_path = f"{GEN}/state/news.json"
+    if os.path.exists(news_path):
+        news_state = json.load(open(news_path, encoding="utf-8"))
+    else:
+        news_state = {"items": []}
     templates, manifest = load_templates(f"{GEN}/templates",
                                          f"{GEN}/templates_manifest.json")
 
@@ -164,10 +169,20 @@ def main():
                   f"close {lc['close']} ({lc['contract']})")
     basis_text = dump_sf_basis(basis_rows)
 
+    # 3b) industry news (best-effort: never blocks the price update)
+    try:
+        import asyncio
+        news_state, n_added = asyncio.run(_news(news_state, today))
+        print(f"[pla365] news updated: {len(news_state['items'])} items, "
+              f"{n_added} new")
+    except Exception as exc:
+        print(f"[pla365] news scrape failed (continuing): {exc}")
+
     # 4) build the bundle
     fmap = build_all(templates, manifest, series, extras_state, basis_text,
                      latest_csv_text, futures, updated, today,
-                     f"{GEN}/assets")
+                     f"{GEN}/assets",
+                     news_items=news_state.get("items", []))
     worker_js = pack_worker(fmap)
     print(f"[pla365] bundle built: {len(fmap)} entries, "
           f"{len(worker_js)} chars")
@@ -198,6 +213,8 @@ def main():
         f.write(dump_json(payload))
     with open(f"{GEN}/state/extras.json", "w", encoding="utf-8") as f:
         json.dump(extras_state, f, ensure_ascii=False, indent=1)
+    with open(news_path, "w", encoding="utf-8") as f:
+        json.dump(news_state, f, ensure_ascii=False, indent=1)
     print("[pla365] state saved")
     return 0
 
@@ -234,6 +251,19 @@ async def _boards(want_dates):
         finally:
             await browser.close()
     return out
+
+
+async def _news(state, today):
+    """Scrape the 生意社 news lists into the rolling state."""
+    from playwright.async_api import async_playwright
+    from pipeline.scrape_news import update_news
+    async with async_playwright() as pw:
+        browser = await pw.chromium.launch()
+        page = await browser.new_page()
+        try:
+            return await update_news(page, state, today)
+        finally:
+            await browser.close()
 
 
 if __name__ == "__main__":

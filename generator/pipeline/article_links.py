@@ -16,7 +16,8 @@ def _li(a):
 def home_section(n=4):
     lis = "".join(_li(a) for a in ARTICLES[:n])
     return (f'<h2>行情解读</h2><ul>{lis}'
-            f'<li><a href="/articles/">全部文章 ›</a></li></ul>')
+            f'<li><a href="/articles/">全部文章 ›</a></li>'
+            f'<li><a href="/news/">行业动态 ›</a></li></ul>')
 
 
 def variety_section(slug, n=4):
