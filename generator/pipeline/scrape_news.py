@@ -96,7 +96,6 @@ async def fetch_detail(page, url):
                     " - 商品动态", " - 大宗商品动态"):
             if sep in doc:
                 doc = doc.split(sep)[0].strip()
-                break
         if len(doc) > len((data.get("title") or "").strip()):
             data["title"] = doc
         desc = re.sub(r"\s+", " ", (data.get("desc") or "")).strip()
@@ -109,6 +108,12 @@ async def fetch_detail(page, url):
                     break
             desc = cut
         title = re.sub(r"\s+", " ", (data.get("title") or "")).strip()
+        # Section labels ride along in the page title / h1; they are
+        # never part of the headline itself.
+        for sep in (" - 商品动态", " - 大宗商品动态", " - 生意社",
+                    "_生意社", " | 生意社"):
+            if sep in title:
+                title = title.split(sep)[0].strip()
         return title, desc
     except Exception:
         return "", ""
