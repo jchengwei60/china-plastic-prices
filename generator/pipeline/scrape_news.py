@@ -90,7 +90,14 @@ async def fetch_detail(page, url):
             "'meta[name=\"description\"]'); "
             "const h = document.querySelector('h1'); "
             "return {desc: m ? m.content : '', "
-            "title: h ? h.innerText : ''}; }")
+            "title: h ? h.innerText : '', doc: document.title || ''}; }")
+        if not (data.get("title") or "").strip():
+            doc = (data.get("doc") or "").strip()
+            for sep in (" - 生意社", "_生意社", "-生意社", " | 生意社"):
+                if sep in doc:
+                    doc = doc.split(sep)[0].strip()
+                    break
+            data["title"] = doc
         desc = re.sub(r"\s+", " ", (data.get("desc") or "")).strip()
         if len(desc) > 110:
             cut = desc[:110]

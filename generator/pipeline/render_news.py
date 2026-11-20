@@ -60,6 +60,29 @@ def _main(items, today):
     return "".join(parts)
 
 
+FAQ_LD = (
+    '{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": ['
+    '{"@type": "Question", "name": "塑料行业动态从哪里来？", '
+    '"acceptedAnswer": {"@type": "Answer", "text": '
+    '"本页聚合生意社橡塑资讯，只保留与本站15个塑料品种相关的装置检修、'
+    '涨价、产能、进出口和市场行情条目，以及原油、期货等宏观动态。'
+    '标题与摘要来自生意社，点击标题可查看原文。"}}, '
+    '{"@type": "Question", "name": "行业动态多久更新一次？", '
+    '"acceptedAnswer": {"@type": "Answer", "text": '
+    '"每天随价格数据一同更新两次（上午与傍晚），展示最近7天的动态。"}}]}'
+)
+
+
+def _collection_ld(today):
+    return (
+        '{"@context": "https://schema.org", "@type": "CollectionPage", '
+        '"name": "塑料行业动态", "url": "https://pla365.com/news/", '
+        '"isAccessibleForFree": true, "creator": {"@type": "Organization", '
+        '"name": "塑价365", "url": "https://pla365.com/"}, '
+        f'"dateModified": "{today}"}}'
+    )
+
+
 def render_news(sample, items, today):
     h = sample.replace("<title>塑料价格异动_塑价365</title>",
                        "<title>塑料行业动态_塑价365</title>")
@@ -71,6 +94,21 @@ def render_news(sample, items, today):
                r"\g<1>" + DESC + r"\g<2>", h, count=1)
     h = h.replace("https://pla365.com/alerts/",
                   "https://pla365.com/news/")
+    # The shell is the alerts page: swap its JSON-LD blocks so the
+    # news page does not carry alerts FAQ / dataset metadata.
+    def _swap_ld(m):
+        block = m.group(1)
+        if '"FAQPage"' in block:
+            return ('<script type="application/ld+json">'
+                    + FAQ_LD + "</script>")
+        if '"Dataset"' in block:
+            return ('<script type="application/ld+json">'
+                    + _collection_ld(today) + "</script>")
+        return m.group(0)
+    h = re.sub(r'<script type="application/ld\+json">(.*?)</script>',
+               _swap_ld, h, flags=re.S)
+    h = h.replace('"name": "价格异动"', '"name": "行业动态"')
+    h = re.sub(r"整理于 \d{4}-\d{2}-\d{2}", f"整理于 {today}", h)
     h = re.sub(r"<main>.*</main>",
                lambda m: "<main>" + _main(items, today) + "</main>",
                h, count=1, flags=re.S)
