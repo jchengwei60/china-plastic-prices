@@ -1,0 +1,48 @@
+name: pla365-daily-video
+
+on:
+  workflow_run:
+    workflows: ["pla365-daily"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Generate even if the day's data is not finalised"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          pip install edge-tts pillow
+          sudo apt-get update && sudo apt-get install -y fonts-noto-cjk
+      - name: Generate daily video
+        env:
+          TZ: Asia/Shanghai
+        run: |
+          if [ "${{ inputs.force }}" = "true" ]; then
+            python generator/make_daily_video.py --force
+          else
+            python generator/make_daily_video.py
+          fi
+      - name: Commit video
+        run: |
+          git config user.name "pla365-bot"
+          git config user.email "actions@github.com"
+          git add video
+          git diff --cached --quiet || git commit -m "video: daily price video $(TZ=Asia/Shanghai date +%F)"
+          git push
