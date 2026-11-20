@@ -78,17 +78,32 @@ async def scrape_news_list(page, url):
     return parse_news_rows(raw)
 
 
-async def fetch_summary(page, url):
-    """The detail page's meta description, cleaned; '' on any failure."""
+async def fetch_detail(page, url):
+    """(full title, meta description) from a detail page.
+
+    List pages truncate long titles, so the detail page's own title
+    wins when it extends the list title. ('', '') on any failure."""
     try:
         await page.goto(url, wait_until="domcontentloaded", timeout=45000)
-        desc = await page.evaluate(
+        data = await page.evaluate(
             "() => { const m = document.querySelector("
-            "'meta[name=\"description\"]'); return m ? m.content : ''; }")
-        desc = re.sub(r"\s+", " ", (desc or "")).strip()
-        return desc[:110]
+            "'meta[name=\"description\"]'); "
+            "const h = document.querySelector('h1'); "
+            "return {desc: m ? m.content : '', "
+            "title: h ? h.innerText : ''}; }")
+        desc = re.sub(r"\s+", " ", (data.get("desc") or "")).strip()
+        if len(desc) > 110:
+            cut = desc[:110]
+            for sep in ("。", "；", "，"):
+                idx = cut.rfind(sep)
+                if idx >= 60:
+                    cut = cut[:idx + 1] if sep != "，" else cut[:idx]
+                    break
+            desc = cut
+        title = re.sub(r"\s+", " ", (data.get("title") or "")).strip()
+        return title, desc
     except Exception:
-        return ""
+        return "", ""
 
 
 async def update_news(page, state, today, summary_cap=12):
@@ -108,5 +123,10 @@ async def update_news(page, state, today, summary_cap=12):
     state, added = merge_items(state, items, today)
     lacking = [it for it in state["items"] if not it.get("summary")]
     for it in lacking[:summary_cap]:
-        it["summary"] = await fetch_summary(page, it["url"])
+        title, desc = await fetch_detail(page, it["url"])
+        if desc:
+            it["summary"] = desc
+        if title and len(title) > len(it["title"]) and \
+                title[:8] == it["title"][:8]:
+            it["title"] = title
     return state, added

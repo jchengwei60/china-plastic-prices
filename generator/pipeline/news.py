@@ -58,7 +58,7 @@ CATEGORY_WORDS = [
     ("行情", ["行情", "走势", "评述", "分析", "展望", "预测"]),
 ]
 DROP_TAGS = {"均差", "招聘"}
-DROP_TITLE_WORDS = ["商品报价动态", "报价动态（", "均差", "招聘"]
+DROP_TITLE_WORDS = ["商品报价动态", "报价动态（", "均差", "招聘", "基准价为"]
 
 
 def classify(title):
