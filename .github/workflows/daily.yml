@@ -36,3 +36,8 @@ jobs:
           git add data daily generator/state
           git diff --cached --quiet || git commit -m "data: daily update $(TZ=Asia/Shanghai date +%F)"
           git push
+      - name: Push URLs to Baidu (no-op until the secret is set)
+        env:
+          TZ: Asia/Shanghai
+          BAIDU_PUSH_TOKEN: ${{ secrets.BAIDU_PUSH_TOKEN }}
+        run: python generator/push_baidu.py
