@@ -205,6 +205,20 @@ def build_all(templates, manifest, series, extras_state, basis_text,
             '<a href="/news/">行业动态</a></nav>')
         if new != content:
             out[path] = (new, ctype, binary)
+
+    # The AI-assistance disclosure lives once in the site-wide footer
+    # (moved out of the individual articles, 2026-11-21).
+    for path in list(out):
+        content, ctype, binary = out[path]
+        if binary or "text/html" not in ctype:
+            continue
+        if "本站行情文章由AI辅助生成" in content:
+            continue
+        new = content.replace(
+            "仅供参考。©",
+            "仅供参考。本站行情文章由AI辅助生成，经人工审核后发布。©")
+        if new != content:
+            out[path] = (new, ctype, binary)
     return out
 
 
