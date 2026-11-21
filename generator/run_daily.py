@@ -52,6 +52,27 @@ def _days_between(first, last):
             for i in range(1, (d1 - d0).days)]
 
 
+def _fill_short_gaps(ent, max_gap=3):
+    """Carry the previous price over holes of at most max_gap days
+    (the 生意社 weekend convention the mains get from their panels).
+    Mutates and returns the [date, price] list."""
+    if len(ent) < 2:
+        return ent
+    out = [ent[0]]
+    for date, price in ent[1:]:
+        prev = out[-1][0]
+        gap = (_dt.date.fromisoformat(date)
+               - _dt.date.fromisoformat(prev)).days - 1
+        if 0 < gap <= max_gap:
+            p = out[-1][1]
+            d0 = _dt.date.fromisoformat(prev)
+            for i in range(1, gap + 1):
+                out.append([(d0 + _dt.timedelta(days=i)).isoformat(), p])
+        out.append([date, price])
+    ent[:] = out
+    return ent
+
+
 def _merge_point(ent, date, price):
     """Insert/replace (date, price) in a sorted [(date, price)] list."""
     for i, (d, _) in enumerate(ent):
@@ -139,6 +160,10 @@ def main():
             price = ent[-1][1]
             for d in holes:
                 ent.append((d, price))
+    # PC is promoted (2026-11-21): keep its board series at daily
+    # density with the same short-hole carry-over, so its percentile
+    # basis matches the mains (see pipeline/context.py PROMOTED).
+    _fill_short_gaps(extras_state["pc"]["series"])
     for slug in MAINS:
         ent = series[slug]
         if ent[-1][0] == today:

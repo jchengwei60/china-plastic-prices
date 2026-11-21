@@ -275,8 +275,11 @@ def _hero(ctx, view, series, slug, is_main, fut_row, yoy):
     else:
         days = len(series)
         start = series[0][0]
-        temp_note = (f"按本站{days}天数据（{start}起，不足一年），"
-                     f"不低于其中{pct}%的日子，<a href=\"/wendu/\">规则</a>")
+        if view.get("sparse"):
+            temp_note = (f"按本站{days}天数据（{start}起，不足一年），"
+                         f"不低于其中{pct}%的日子，<a href=\"/wendu/\">规则</a>")
+        else:
+            temp_note = f"不低于近一年{pct}%的日子"
         data_date = series[-1][0]
         week = _chg_raw(price, _on_or_before(series, _date_minus(data_date, 7)))
         month = _chg_raw(price, _on_or_before(series, _date_minus(data_date, 30)))
@@ -287,7 +290,7 @@ def _hero(ctx, view, series, slug, is_main, fut_row, yoy):
             f'<div>数据起始<b class="n">{start[5:]}</b></div>')
         extra_lines = ""
         src = f"生意社橡塑大宗榜 {data_date}，元/吨；同比去年为生意社公布值。"
-    temp_disp = temp + ("*" if not is_main else "")
+    temp_disp = temp + ("*" if view.get("sparse") else "")
     return (
         f'<div class="box"><div class="big">{_fmt_int(price)} <small>元/吨</small></div>'
         f'<div style="margin-top:6px"><span class="{view["chg_cls"]}">{view["chg_str"]}</span> · '

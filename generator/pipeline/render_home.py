@@ -36,11 +36,17 @@ def _m_d(date):  # -> '11月10日'
 
 def _card(v, extra=False):
     slug, name = v["slug"], v["name"]
-    if extra:
+    if extra and v.get("sparse"):
         title = f"本站{v['days']}天百分位 {v['pct']}%"
         temp = v["temp"] + "*"
         rg_title = f"本站{v['days']}天区间位置"
         mid = f"本站{v['days']}天"
+    elif extra:
+        # promoted board variety (PC): mains-grade labels, no star
+        title = f"近一年百分位 {v['pct']}%"
+        temp = v["temp"]
+        rg_title = "近一年区间位置"
+        mid = "近一年"
     else:
         title = f"近一年百分位 {v['pct']}%"
         temp = v["temp"]

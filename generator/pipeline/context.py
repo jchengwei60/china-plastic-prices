@@ -52,6 +52,12 @@ def _temp_cls(temp):
     return {"偏贵": "hot", "偏便宜": "cold"}.get(temp, "mid")
 
 
+# Board varieties promoted to the mains' statistical treatment
+# (365-day window percentile, no sparse-basis star): their series
+# are gap-filled to daily density in the state (PC, 2026-11-21).
+PROMOTED = {"pc"}
+
+
 def variety_view(slug, name, series, sample_days=None):
     """All display values for one variety card / row."""
     price = series[-1][1]
@@ -75,6 +81,7 @@ def variety_view(slug, name, series, sample_days=None):
         "spark": pts, "spark_dir": direction,
         "weekly_chg": chg_pct(price, week_ago),
         "days": sample_days if sample_days is not None else len(win),
+        "sparse": sample_days is not None,
         "start": series[0][0][5:] if series else "",
     }
 
@@ -84,8 +91,11 @@ def build_context(series, extras, futures, today, updated):
              ["pp", "lldpe", "hdpe", "ldpe", "pvc", "abs", "ps", "pet"]]
     extra_views = []
     for ex in extras:
-        v = variety_view(ex["slug"], ex["name"], ex["series"],
-                         sample_days=len(ex["series"]))
+        if ex["slug"] in PROMOTED:
+            v = variety_view(ex["slug"], ex["name"], ex["series"])
+        else:
+            v = variety_view(ex["slug"], ex["name"], ex["series"],
+                             sample_days=len(ex["series"]))
         extra_views.append(v)
     fut_date = futures["pp"]["date"]
     fut_rows = []
