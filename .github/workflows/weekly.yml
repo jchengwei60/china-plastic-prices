@@ -21,6 +21,10 @@ jobs:
         env:
           TZ: Asia/Shanghai
         run: python generator/make_weekly_draft.py
+      - name: Generate WeChat pack
+        env:
+          TZ: Asia/Shanghai
+        run: python generator/make_wechat_pack.py
       - name: Commit draft
         run: |
           git config user.name "pla365-bot"

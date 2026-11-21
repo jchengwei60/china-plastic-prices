@@ -148,13 +148,13 @@ def main():
     L.append("| 品种 | 周末价 | 周涨跌 | 周涨跌% | 采购温度（分位） |")
     L.append("| --- | ---: | ---: | ---: | --- |")
     for slug, c_now, c_prev, wchg, pc, lab in sorted(rows, key=lambda r: -r[3]):
-        star = "*" if slug in extras else ""
+        star = "*" if slug in extras and slug != "pc" else ""
         L.append(f"| {names[slug]}{star} | {fmt(c_now[1])} | "
                  f"{c_now[1] - c_prev[1]:+,.0f} | {wchg:+.2f}% | "
                  f"{lab or '—'}（{pc:.0f}%） |")
     L.append("")
     L.append(f"数据截至 {sun_s}（周末取最近一个有数据的日子）；带 * 为大宗榜品种，"
-             "分位按实际观测点计算。")
+             "分位按实际观测点计算（PC 已补齐日度数据，按近一年窗口计算，不带 *）。")
     L.append("")
     L.append("## 本周异动（单日涨跌 ≥2%；大宗榜品种为相邻两期榜单变化）")
     L.append("")
