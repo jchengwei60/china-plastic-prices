@@ -61,7 +61,7 @@ def load_templates(templates_dir, manifest_path):
 
 def build_all(templates, manifest, series, extras_state, basis_text,
               latest_csv_text, futures, updated, today, assets_dir,
-              news_items=None):
+              news_items=None, spot=None):
     """futures: {slug: {close, chg, date, settle, fut_series}} for the
     four futures varieties. extras_state: {slug: {name, bulk, yoy,
     series}}. Returns the F map."""
@@ -100,6 +100,8 @@ def build_all(templates, manifest, series, extras_state, basis_text,
         if slug in FUT_MAINS:
             kw = {"fut_series": futures[slug]["fut_series"],
                   "settle": futures[slug]["settle"]}
+        if spot and spot.get(slug):
+            kw["spot_rows"] = spot[slug]
         put(f"/{slug}/index.html",
             render_variety(ctx, tpl(f"/{slug}/index.html"), slug, series[slug], **kw))
     for slug in EXTRAS:
@@ -132,7 +134,8 @@ def build_all(templates, manifest, series, extras_state, basis_text,
     for path in templates:
         m = re.fullmatch(r"/grade/([a-z0-9-]+)/index\.html", path)
         if m:
-            put(path, render_grade(tpl(path), series, today, updated))
+            put(path, render_grade(tpl(path), series, today, updated,
+                                   spot=spot, grade_slug=m.group(1)))
     put("/grade/index.html", render_grade_index(tpl("/grade/index.html"), series, today))
 
     for slug, a, b in PAIRS:

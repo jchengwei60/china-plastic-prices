@@ -17,6 +17,7 @@ from __future__ import annotations
 import re
 
 from .dataio import SOURCES
+from .spot import parse_spot_rows
 
 # "更新时间：11-17 16:00" as rendered on the detail pages
 RE_UPDATED = re.compile(r"更新时间[:：]\s*(\d{2}-\d{2})\s+(\d{2}:\d{2})")
@@ -65,6 +66,7 @@ def fetch_panels(slugs=None, timeout_ms=45000, with_chart=False):
                 page.wait_for_timeout(2500)  # let any check/JS settle
                 text = page.inner_text("body")
                 parsed = parse_panel(text)
+                parsed["spot"] = extract_spot_rows(page)
                 if with_chart:
                     chart = extract_chart_series(page)
                     # trust the chart only if its last point is the panel price
@@ -78,6 +80,34 @@ def fetch_panels(slugs=None, timeout_ms=45000, with_chart=False):
             out[slug] = parsed
         browser.close()
     return out
+
+
+def extract_spot_rows(page):
+    """Read the 现货参考价 table (grade-level quotes) off a detail
+    page: the table whose header carries 基准规格 and 实时价格.
+    Returns parsed row dicts (see spot.py); [] when the page has no
+    such table (HDPE/LDPE/PS had none on 2026-11-21)."""
+    try:
+        raw = page.evaluate(
+            """() => {
+              for (const tb of document.querySelectorAll('table')) {
+                const head = tb.querySelector('tr');
+                if (!head) continue;
+                const cells = [...head.querySelectorAll('th,td')]
+                  .map(c => c.innerText.trim());
+                if (cells.some(c => c.includes('基准规格')) &&
+                    cells.some(c => c.includes('实时价格'))) {
+                  return [...tb.querySelectorAll('tr')]
+                    .map(tr => [...tr.querySelectorAll('td')]
+                      .map(c => c.innerText.trim()))
+                    .filter(r => r.length >= 6);
+                }
+              }
+              return [];
+            }""")
+    except Exception:
+        return []
+    return parse_spot_rows(raw)
 
 
 def _norm_chart_series(raw):

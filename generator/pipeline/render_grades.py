@@ -23,6 +23,7 @@ import re
 from .compute import stats_3m
 from .dataio import NAMES
 from .render_history import _chg_span, _m_d, _stamps
+from .spot import match_rows, quote_text, spec_key
 
 SHORT = {"pp": "PP", "lldpe": "LLDPE", "hdpe": "HDPE", "ldpe": "LDPE",
          "pvc": "PVC", "abs": "ABS", "ps": "PS", "pet": "PET"}
@@ -104,9 +105,11 @@ def _changes(ent, today):
     return price, chg, week, month
 
 
-def render_grade(sample, series, today, updated):
+def render_grade(sample, series, today, updated, spot=None,
+                 grade_slug=None):
     parent = _parent_slug(sample)
     pname = NAMES[parent]
+    spot_rows = (spot or {}).get(parent) or []
     ent = series[parent]
     price, chg, week, month = _changes(ent, today)
     md = _m_d(today)
@@ -151,20 +154,49 @@ def render_grade(sample, series, today, updated):
         mfaq = (f"按{pname}基准价，近一个月{word}{abs(month):.1f}%。"
                 if month != 0 else f"按{pname}基准价，近一个月持平。")
         h = re.sub(r'按' + re.escape(pname) + r'基准价，近一个月[^<"]*。', mfaq, h)
+        # spot quotes for this very spec, split by brand/market
+        keys = {spec_key(spec)}
+        if grade_slug:
+            keys.add(grade_slug)
+        matched = [r for r in spot_rows if spec_key(r["spec"]) in keys]
+        if matched:
+            box = (f'<div class="box"><b>{disp}分市场现货参考价</b>'
+                   f'（{md}，生意社）<br>{quote_text(matched)}</div>')
+            anchor = (f'<div class="card"><b>{pname}近90天价格走势'
+                      f'（元/吨）</b>')
+            if anchor in h:
+                h = h.replace(anchor, box + anchor, 1)
     else:  # REF explainer page
         disp = re.search(r'<p>([^<]+?)没有公开的每日牌号报价。可参考同品种', h).group(1)
         cls, ctxt = _chg_span(chg, 2)
         mcls, mtxt = _chg_span(month, 1)
-        h = re.sub(r'没有公开的每日牌号报价。可参考同品种生意社' + re.escape(pname) +
-                   r'基准价：\d+月\d+日 \S+ 元/吨（<span class="[^"]*">[^<]*</span>），近一个月<span class="[^"]*">[^<]*</span>',
-                   f'没有公开的每日牌号报价。可参考同品种生意社{pname}基准价：{md} {price:.0f} 元/吨'
-                   f'（<span class="{cls}">{ctxt}</span>），近一个月<span class="{mcls}">{mtxt}</span>',
-                   h, count=1)
-        faq1 = (f"{disp}没有公开的每日牌号报价，可参考{md}生意社{pname}基准价"
-                f"{price:.0f}元/吨；实际成交价因厂家、地区、批量有升贴水。")
-        h = re.sub(re.escape(disp) + r'没有公开的每日牌号报价，可参考\d+月\d+日生意社' +
-                   re.escape(pname) + r'基准价\S+?元/吨；实际成交价因厂家、地区、批量有升贴水。',
-                   faq1, h)
+        matched = match_rows(spot_rows, spec_key(disp))
+        if matched:
+            # a real grade-level quote exists today: show it instead
+            # of the no-public-quote wording
+            h = re.sub(r'没有公开的每日牌号报价。可参考同品种生意社' + re.escape(pname) +
+                       r'基准价：\d+月\d+日 \S+ 元/吨（<span class="[^"]*">[^<]*</span>），近一个月<span class="[^"]*">[^<]*</span>',
+                       f'生意社现货参考价（{md}）：{quote_text(matched)}。'
+                       f'同品种{pname}基准价 {price:.0f} 元/吨'
+                       f'（<span class="{cls}">{ctxt}</span>），近一个月<span class="{mcls}">{mtxt}</span>',
+                       h, count=1)
+            faq1 = (f"{disp}现货参考价（{md}，生意社）：{quote_text(matched)}；"
+                    f"同品种{pname}基准价{price:.0f}元/吨，"
+                    f"实际成交价因厂家、地区、批量有升贴水。")
+            h = re.sub(re.escape(disp) + r'没有公开的每日牌号报价，可参考\d+月\d+日生意社' +
+                       re.escape(pname) + r'基准价\S+?元/吨；实际成交价因厂家、地区、批量有升贴水。',
+                       faq1, h)
+        else:
+            h = re.sub(r'没有公开的每日牌号报价。可参考同品种生意社' + re.escape(pname) +
+                       r'基准价：\d+月\d+日 \S+ 元/吨（<span class="[^"]*">[^<]*</span>），近一个月<span class="[^"]*">[^<]*</span>',
+                       f'没有公开的每日牌号报价。可参考同品种生意社{pname}基准价：{md} {price:.0f} 元/吨'
+                       f'（<span class="{cls}">{ctxt}</span>），近一个月<span class="{mcls}">{mtxt}</span>',
+                       h, count=1)
+            faq1 = (f"{disp}没有公开的每日牌号报价，可参考{md}生意社{pname}基准价"
+                    f"{price:.0f}元/吨；实际成交价因厂家、地区、批量有升贴水。")
+            h = re.sub(re.escape(disp) + r'没有公开的每日牌号报价，可参考\d+月\d+日生意社' +
+                       re.escape(pname) + r'基准价\S+?元/吨；实际成交价因厂家、地区、批量有升贴水。',
+                       faq1, h)
     return _stamps(h, today)
 
 

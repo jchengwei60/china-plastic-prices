@@ -78,6 +78,11 @@ def main():
         news_state = json.load(open(news_path, encoding="utf-8"))
     else:
         news_state = {"items": []}
+    spot_path = f"{GEN}/state/spot.json"
+    if os.path.exists(spot_path):
+        spot_state = json.load(open(spot_path, encoding="utf-8"))
+    else:
+        spot_state = {"days": {}}
     templates, manifest = load_templates(f"{GEN}/templates",
                                          f"{GEN}/templates_manifest.json")
 
@@ -178,11 +183,25 @@ def main():
     except Exception as exc:
         print(f"[pla365] news scrape failed (continuing): {exc}")
 
+    # 3c) spot reference quotes (grade level; best-effort, rides on
+    # the same detail-page visits as the panels)
+    spot_today = {s: panels[s].get("spot") or [] for s in panels}
+    if any(spot_today.values()):
+        spot_state["days"][today] = spot_today
+    for d in sorted(spot_state["days"])[:-14]:
+        del spot_state["days"][d]
+    latest_spot = (spot_state["days"][max(spot_state["days"])]
+                   if spot_state["days"] else {})
+    print(f"[pla365] spot quotes: "
+          f"{sum(len(v) for v in latest_spot.values())} rows "
+          f"({', '.join(s for s, v in latest_spot.items() if v)})")
+
     # 4) build the bundle
     fmap = build_all(templates, manifest, series, extras_state, basis_text,
                      latest_csv_text, futures, updated, today,
                      f"{GEN}/assets",
-                     news_items=news_state.get("items", []))
+                     news_items=news_state.get("items", []),
+                     spot=latest_spot)
     worker_js = pack_worker(fmap)
     print(f"[pla365] bundle built: {len(fmap)} entries, "
           f"{len(worker_js)} chars")
@@ -215,6 +234,8 @@ def main():
         json.dump(extras_state, f, ensure_ascii=False, indent=1)
     with open(news_path, "w", encoding="utf-8") as f:
         json.dump(news_state, f, ensure_ascii=False, indent=1)
+    with open(spot_path, "w", encoding="utf-8") as f:
+        json.dump(spot_state, f, ensure_ascii=False, indent=1)
     print("[pla365] state saved")
     return 0
 

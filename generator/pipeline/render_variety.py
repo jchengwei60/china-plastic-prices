@@ -377,7 +377,7 @@ def _faq_texts(ctx, view, series, slug, is_main, fut_row, settle, yoy,
 
 
 def render_variety(ctx, sample, slug, series, fut_series=None, settle=None,
-                   yoy=None, bulk=None):
+                   yoy=None, bulk=None, spot_rows=None):
     """Render one variety page. `series` is the full price series
     [(date, price)]; `fut_series` the futures daily closes for the four
     futures varieties; `settle` that variety's settlement price;
@@ -473,6 +473,10 @@ def render_variety(ctx, sample, slug, series, fut_series=None, settle=None,
                fix_ld, h, count=1)
     # --- footer date ---
     h = re.sub(r"整理于 \d{4}-\d{2}-\d{2}", f"整理于 {today}", h)
+    # spot reference quotes (grade level, approved 2026-11-21)
+    if spot_rows:
+        from .spot import spot_section
+        h = inject(h, spot_section(spot_rows, series[-1][1]))
     # article entry point (approved 2026-11-19)
     h = inject(h, variety_section(slug))
     return h
