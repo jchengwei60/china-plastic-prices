@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import os
+import urllib.error
 import urllib.request
 from datetime import date
 
@@ -49,6 +50,12 @@ def main():
         if out.get("not_same_site"):
             print(f"[baidu] rejected as not_same_site: "
                   f"{out['not_same_site']}")
+    except urllib.error.HTTPError as exc:
+        try:
+            body = exc.read().decode("utf-8", "replace")
+        except Exception:
+            body = ""
+        print(f"[baidu] push failed (continuing): HTTP Error {exc.code}: {body or exc}")
     except Exception as exc:
         print(f"[baidu] push failed (continuing): {exc}")
     return 0
