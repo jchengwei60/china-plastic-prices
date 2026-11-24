@@ -17,6 +17,10 @@ import urllib.request
 from datetime import date
 
 SITE = "https://pla365.com"
+# Baidu 普通收录 daily quota for a new site is 10 URLs; an over-quota
+# batch is rejected entirely, so only the top-priority URLs go out.
+# A successful push reports `remain` — raise this if the quota grows.
+DAILY_QUOTA = 10
 MAINS = ["pp", "lldpe", "hdpe", "ldpe", "pvc", "abs", "ps", "pet"]
 
 
@@ -37,7 +41,7 @@ def main():
         print("[baidu] no BAIDU_PUSH_TOKEN set; skipping push")
         return 0
     today = date.today().isoformat()
-    urls = url_list(today)
+    urls = url_list(today)[:DAILY_QUOTA]
     api = (f"http://data.zz.baidu.com/urls?site={SITE}&token={token}")
     req = urllib.request.Request(
         api, data="\n".join(urls).encode("utf-8"), method="POST")
